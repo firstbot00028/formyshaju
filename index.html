@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏆 Global Mandi Award 🏆</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <style>
+        body {
+            margin: 0; padding: 0;
+            background: #000;
+            color: white; font-family: 'Segoe UI', sans-serif;
+            display: flex; flex-direction: column; align-items: center;
+            justify-content: center; min-height: 100vh; overflow: hidden;
+            text-align: center; cursor: pointer;
+        }
+
+        #instruction { font-size: 22px; animation: blink 1.5s infinite; color: #4285F4; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+        #main-content { display: none; width: 95%; max-width: 500px; }
+
+        /* Google Logo at Top */
+        .google-header { width: 80px; margin-bottom: 10px; }
+
+        /* The Ultimate Orbit Photo Frame */
+        .photo-orbit-container {
+            position: relative;
+            width: 260px; height: 260px;
+            margin: 0 auto;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        .mandi-img {
+            width: 210px; height: 210px;
+            border-radius: 50%;
+            object-fit: cover;
+            z-index: 10;
+            border: 4px solid #000; /* ഫോട്ടോയും ഓർബിറ്റും വേർതിരിക്കാൻ */
+        }
+
+        .orbit-ring {
+            position: absolute;
+            width: 100%; height: 100%;
+            border-radius: 50%;
+            background: conic-gradient(#4285F4, #34A853, #FBBC05, #EA4335, #4285F4);
+            animation: rotateOrbit 1.5s linear infinite; /* വേഗത കൂട്ടി */
+            mask: radial-gradient(transparent 65%, black 66%);
+            -webkit-mask: radial-gradient(transparent 65%, black 66%);
+            box-shadow: 0 0 20px rgba(66, 133, 244, 0.5);
+        }
+
+        @keyframes rotateOrbit {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .trophy-badge {
+            position: absolute;
+            top: -10px; right: 10px;
+            width: 80px; z-index: 20;
+            filter: drop-shadow(0 0 10px gold);
+        }
+
+        .gemini-text {
+            color: #fff; font-family: 'Courier New', monospace;
+            font-size: 14px; min-height: 60px; margin: 20px 0;
+            padding: 12px; background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px; border-left: 4px solid #4285F4; text-align: left;
+        }
+
+        .btn-box { margin-top: 15px; height: 80px; position: relative; width: 100%; }
+        .btn {
+            padding: 12px 25px; font-size: 15px; border-radius: 50px; border: none;
+            cursor: pointer; font-weight: bold; transition: 0.1s;
+        }
+        #yes-btn { background: #34A853; color: white; position: relative; z-index: 30; }
+        #no-btn { background: #EA4335; color: white; position: absolute; left: 50%; }
+
+        #final-page { display: none; padding: 20px; }
+    </style>
+</head>
+<body ondblclick="startCelebration()">
+
+    <div id="instruction">
+        <h1>ഷാജിതാ... നിനക്കൊരു സർപ്രൈസ്! 🏆</h1>
+        <p>അവാർഡ് കാണാൻ സ്ക്രീനിൽ <b>Double Tap</b> അടിക്കൂ!</p>
+    </div>
+
+    <div id="main-content">
+        <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_light_color_92x30dp.png" class="google-header">
+
+        <div id="typewriter" class="gemini-text"></div>
+
+        <div class="photo-orbit-container">
+            <div class="orbit-ring"></div>
+            <img src="https://img.icons8.com/color/480/trophy.png" class="trophy-badge">
+            <img src="adam.jpg" alt="Mandi Profile" class="mandi-img">
+        </div>
+
+        <p style="margin-top: 20px; font-weight: bold;">ഇനി അദാമിനെ കളിയാക്കുമോ? 👇</p>
+        <div class="btn-box">
+            <button id="yes-btn" class="btn" onclick="goToFinal()">ഇല്ല, സോറി അതാമേ.. 🥺</button>
+            <button id="no-btn" class="btn" onmouseover="escapeNo()">അതെ, കളിയാക്കും! 😈</button>
+        </div>
+    </div>
+
+    <div id="final-page">
+        <h1 style="font-size: 40px; color: #34A853;">✅ മണ്ടി സോറി പറഞ്ഞു! ✅</h1>
+        <p>ഗൂഗിൾ എഞ്ചിനീയർ അദാം നിന്നോട് ക്ഷമിച്ചിരിക്കുന്നു.</p>
+        <h2 style="color: #EA4335;">പക്ഷെ ഈ ട്രോഫി സോഷ്യൽ മീഡിയയിൽ ഫേമസ് ആകും! 🚀🔥</h2>
+    </div>
+
+    <audio id="mandiAudio"><source src="mandi.mp3" type="audio/mpeg"></audio>
+
+    <script>
+        const speechText = "🤖 Google System Alert: Scanning Shajitha... 100% Mandi Detected. Awarding the Global Mandi Trophy for trolling my creator, Google Software Engineer Adam. Surrender now!";
+        let i = 0;
+
+        function typeWriter() {
+            if (i < speechText.length) {
+                document.getElementById("typewriter").innerHTML += speechText.charAt(i);
+                i++;
+                setTimeout(typeWriter, 40);
+            }
+        }
+
+        function startCelebration() {
+            document.getElementById('instruction').style.display = 'none';
+            document.getElementById('main-content').style.display = 'block';
+            document.getElementById('mandiAudio').play();
+            typeWriter();
+            confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 }, colors: ['#4285F4', '#34A853', '#FBBC05', '#EA4335'] });
+        }
+
+        function escapeNo() {
+            var x = Math.random() * (window.innerWidth - 100);
+            var y = Math.random() * (window.innerHeight - 100);
+            var btn = document.getElementById('no-btn');
+            btn.style.position = 'fixed';
+            btn.style.left = x + 'px';
+            btn.style.top = y + 'px';
+        }
+
+        function goToFinal() {
+            document.getElementById('main-content').style.display = 'none';
+            document.getElementById('final-page').style.display = 'block';
+            confetti({ particleCount: 150, spread: 70, origin: { y: 0.5 } });
+        }
+    </script>
+</body>
+</html>
